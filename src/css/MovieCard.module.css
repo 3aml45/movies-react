@@ -2,6 +2,7 @@
   list-style: none;
 	font-size: 1.5rem;
 	text-align: center;
+	width: 150px;
 }
 
 .movieImage {
@@ -11,9 +12,16 @@
 	background-color: azure;
 }
 
-@media (max-width: 700px){
+@media (max-width: 1000px){
+	.movieImage {
+		width: 150px;
+		height: 150px;
+	}
+}
+
+/* @media (max-width: 500px){
 	.movieImage {
 		width: 230px;
 		height: 115px;
 	}
-}
+} */

@@ -8,11 +8,12 @@ export function MovieCard({ movie }) {
 			<img
 				width={345}
 				// height={345}
-				height={230}
+				height={280}
 				className={styles.movieImage}
 				src={imageUrl}
 				alt={movie.title}
 			/>
+			<br/>
 			{movie.title}
 		</li>
 	)
