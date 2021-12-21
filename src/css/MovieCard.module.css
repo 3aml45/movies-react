@@ -5,6 +5,10 @@
 	width: 150px;
 }
 
+.movieCard:hover {
+	opacity: .8;
+}
+
 .movieImage {
 	width: 360px;
 	height: 230px;
