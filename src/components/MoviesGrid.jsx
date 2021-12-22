@@ -12,36 +12,53 @@ import { get } from '../utils/httpClient';
 // import from react-router-dom
 import { useLocation } from 'react-router-dom';
 // import custom hooks
-import { useQuery } from '../hooks/useQuery.js';
+// import { useQuery } from '../hooks/useQuery.js';
+// import from react-infinite-scroll-component
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 
-export function MoviesGrid() {
+
+export function MoviesGrid({ search }) {
 	const [movies, setMovies] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
 
-	// const location = useLocation();
-	// console.log(location.search)
-
-	const query = useQuery();
-	const search = query.get('search');
+	// const query = useQuery();
+	// const search = query.get('search');
 
 	useEffect(() => {
 		setIsLoading(true)
-		const searchUrl = search ? '/search/movie?query=' + search : '/discover/movie';
+		const searchUrl = search
+			? '/search/movie?query=' + search + '&page=' + page
+			: '/discover/movie?page=' + page;
 		get(searchUrl).then(data => {
-			setMovies(data.results);
+			setMovies((prevMovies)=>prevMovies.concat(data.results));
 			setIsLoading(false)
+			setHasMore(data.page < data.total_pages)
 		})
-	}, [search]);
-	if (isLoading) {
-		return <Spinner />
-	}
+	}, [search, page]);
+	// if (isLoading) {
+	// 	return <Spinner />
+	// }
 	return (
-		<ul className={styles.moviesGrid}>
-			{movies.map((movie) => (
-				<MovieCard key={movie.id} movie={movie} />
-			))}
-		</ul>
+		<InfiniteScroll
+			dataLength={movies.length}
+			hasMore={hasMore}
+			next={()=>setPage((prevPage)=>prevPage + 1)}
+			loader={<Spinner/>}
+			endMessage={
+				<p style={{ textAlign: 'center' }}>
+					<b>Yay! You have seen it all</b>
+				</p>
+			}
+		>
+			<ul className={styles.moviesGrid}>
+				{movies.map((movie) => (
+					<MovieCard key={movie.id} movie={movie} />
+				))}
+			</ul>
+		</InfiniteScroll>
 	)
 }
