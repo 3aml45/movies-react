@@ -32,8 +32,8 @@ export function MoviesGrid({ search }) {
 			: '/discover/movie?page=' + page;
 		get(searchUrl).then(data => {
 			setMovies((prevMovies)=>prevMovies.concat(data.results));
-			setIsLoading(false)
 			setHasMore(data.page < data.total_pages)
+			setIsLoading(false)
 		})
 	}, [search, page]);
 	if(!isLoading && movies.length === 0){
