@@ -24,10 +24,6 @@ export function MoviesGrid({ search }) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(true);
-
-	// const query = useQuery();
-	// const search = query.get('search');
-
 	useEffect(() => {
 		setIsLoading(true)
 		const searchUrl = search
@@ -39,9 +35,6 @@ export function MoviesGrid({ search }) {
 			setHasMore(data.page < data.total_pages)
 		})
 	}, [search, page]);
-	// if (isLoading) {
-	// 	return <Spinner />
-	// }
 	return (
 		<InfiniteScroll
 			dataLength={movies.length}
@@ -50,7 +43,7 @@ export function MoviesGrid({ search }) {
 			loader={<Spinner/>}
 			endMessage={
 				<p style={{ textAlign: 'center' }}>
-					<b>Yay! You have seen it all</b>
+					No more movies of: <b> {search} </b>
 				</p>
 			}
 		>
