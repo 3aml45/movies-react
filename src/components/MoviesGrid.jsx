@@ -4,27 +4,39 @@ import styles from '../css/MoviesGrid.module.css';
 // import movies from './movies.json';
 // import components
 import { MovieCard } from './MovieCard';
+import { Spinner } from './Spinner';
 // import from react
 import { useEffect, useState } from 'react';
 // import custom functions
 import { get } from '../utils/httpClient';
+// import from react-router-dom
+import { useLocation } from 'react-router-dom';
+// import custom hooks
+import { useQuery } from '../hooks/useQuery.js';
 
 
 
 export function MoviesGrid() {
 	const [movies, setMovies] = useState([]);
-	
-	useEffect(()=>{
-		// fetch(
-		// 	"https://api.themoviedb.org/3/discover/movie/?api_key=9e55e70322adb52b8edc5b55564a0a2d"
-		// ).then(result => result.json()).then(data => {
-		// 	setMovies(data.results);
-		// 	console.log(movies)
-		// })
-		get('/discover/movie').then(data=>{
+	const [isLoading, setIsLoading] = useState(true);
+
+	// const location = useLocation();
+	// console.log(location.search)
+
+	const query = useQuery();
+	const search = query.get('search');
+
+	useEffect(() => {
+		setIsLoading(true)
+		const searchUrl = search ? '/search/movie?query=' + search : '/discover/movie';
+		get(searchUrl).then(data => {
 			setMovies(data.results);
+			setIsLoading(false)
 		})
-	}, []);
+	}, [search]);
+	if (isLoading) {
+		return <Spinner />
+	}
 	return (
 		<ul className={styles.moviesGrid}>
 			{movies.map((movie) => (

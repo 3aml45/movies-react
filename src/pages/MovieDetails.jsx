@@ -8,17 +8,24 @@ import { useParams } from 'react-router-dom';
 import { get } from '../utils/httpClient';
 // import form react
 import { useEffect, useState } from 'react';
+//import components
+import { Spinner } from '../components/Spinner';
 
 export function MovieDetails() {
 	const { movieId } = useParams();
 	const [movie, setMovie] = useState(null);
-	useEffect(()=>{
-		get('/movie/' + movieId).then(data=>{
+	const [isLoading, setIsLoading] = useState(true);
+	useEffect(() => {
+		setIsLoading(true)
+		get('/movie/' + movieId).then(data => {
 			setMovie(data)
-			console.log(movie)
+			setIsLoading(false)
 		})
-	},[movieId])
-	if(!movie){
+	}, [movieId])
+	if(isLoading){
+		return <Spinner />;
+	}
+	if (!movie) {
 		return null;
 	}
 	const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
