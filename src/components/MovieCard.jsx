@@ -2,9 +2,13 @@
 import styles from '../css/MovieCard.module.css';
 // import from react-router-dom
 import { Link } from 'react-router-dom';
+// import placeholder image
+import placeholder from '../placeholder.jpg';
+// import custom functions
+import { getMovieImage } from '../utils/getMovieImage';
 
 export function MovieCard({ movie }) {
-	const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+	const imageUrl = getMovieImage(movie.poster_path, 500);
 	return (
 		<li className={styles.movieCard}>
 			<Link to={`/movie/${movie.id}`}>

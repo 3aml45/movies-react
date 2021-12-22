@@ -6,6 +6,7 @@ import styles from '../css/MovieDetails.module.css';
 import { useParams } from 'react-router-dom';
 // import custom functions
 import { get } from '../utils/httpClient';
+import { getMovieImage } from '../utils/getMovieImage';
 // import form react
 import { useEffect, useState } from 'react';
 //import components
@@ -28,7 +29,7 @@ export function MovieDetails() {
 	if (!movie) {
 		return null;
 	}
-	const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+	const imageUrl = getMovieImage(movie.poster_path,500);
 	return (
 		<div className={styles.detailsContainer}>
 			<img

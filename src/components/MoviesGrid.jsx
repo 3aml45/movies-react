@@ -5,6 +5,7 @@ import styles from '../css/MoviesGrid.module.css';
 // import components
 import { MovieCard } from './MovieCard';
 import { Spinner } from './Spinner';
+import { Empty } from './Empty';
 // import from react
 import { useEffect, useState } from 'react';
 // import custom functions
@@ -35,6 +36,9 @@ export function MoviesGrid({ search }) {
 			setHasMore(data.page < data.total_pages)
 		})
 	}, [search, page]);
+	if(!isLoading && movies.length === 0){
+		return <Empty />
+	}
 	return (
 		<InfiniteScroll
 			dataLength={movies.length}
