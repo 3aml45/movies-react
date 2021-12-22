@@ -10,10 +10,6 @@ import { Empty } from './Empty';
 import { useEffect, useState } from 'react';
 // import custom functions
 import { get } from '../utils/httpClient';
-// import from react-router-dom
-import { useLocation } from 'react-router-dom';
-// import custom hooks
-// import { useQuery } from '../hooks/useQuery.js';
 // import from react-infinite-scroll-component
 import InfiniteScroll from 'react-infinite-scroll-component';
 
