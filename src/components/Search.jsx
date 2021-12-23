@@ -3,13 +3,11 @@ import styles from '../css/Search.module.css';
 // import icons from react-icons
 import { FaSearch } from 'react-icons/fa';
 // import from react-router-dom
-import { useHistory } from 'react-router-dom';
-// import custom hooks
-import { useQuery } from '../hooks/useQuery';
+import { useSearchParams } from 'react-router-dom';
 
 export function Search() {
-	const history = useHistory();
-	const query = useQuery();
+	// const navigate = useNavigate();
+	const [query, setQuery] = useSearchParams();
 	const search = query.get('search');
 	return (
 		<form
@@ -23,7 +21,8 @@ export function Search() {
 					aria-label='Search Movies'
 					onChange={(e)=>{
 						const value = e.target.value;
-						history.push('/?search='+value)
+						setQuery({search: value})
+						// navigate('/?search='+value)
 					}}
 				/>
 					<FaSearch size={20} color="black" className={styles.searchButton} />
